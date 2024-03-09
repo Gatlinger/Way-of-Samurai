@@ -1,0 +1,24 @@
+.profile_img {
+    width: 800px;
+}
+
+.content {
+    grid-area: c;
+    background-color: #3F8FD2;
+}
+
+.item {
+    color: yellow;
+}
+
+.item img {
+    width: 50px;
+}
+
+.postsBlock {
+    padding: 10px;
+}
+
+.posts {
+    margin-top: 10px;
+}
