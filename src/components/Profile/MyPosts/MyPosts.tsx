@@ -16,6 +16,7 @@ const MyPosts = (props: MyPostsPropsType) => {
         if (newPostEl.current !== null) {
             let text = newPostEl.current.value
             props.addPost(text)
+            newPostEl.current.value = ""
         }
     }
 
@@ -39,6 +40,6 @@ const MyPosts = (props: MyPostsPropsType) => {
             </div>
         </div>
     )
-}
+} 
 
 export default MyPosts
