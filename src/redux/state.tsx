@@ -1,4 +1,6 @@
-import { rerederEntireTree } from "../render"
+let rerederEntireTree = (state: StateType) => {
+    console.log(state)
+}
 
 export type PostsType = {
     id: number
@@ -22,8 +24,6 @@ export type messagesPageType = {
     messages: MessageType[]
     newMessage: string
 }
-
-
 export type StateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
@@ -83,9 +83,14 @@ export const addNewMessage = () => {
     }
     state.dialogsPage.messages.push(message)
     rerederEntireTree(state)
+    state.dialogsPage.newMessage = ''
 }
 
 export const updateNewMessageText = (newText: string) => {
     state.dialogsPage.newMessage = newText
     rerederEntireTree(state)
+}
+
+export const subscribe = (observer: (state: StateType) => void) => {
+    rerederEntireTree = observer
 }
