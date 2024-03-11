@@ -1,26 +1,35 @@
-import React, {useRef} from "react";
-import {PostsType} from "../../../redux/state";
+import React, { useRef } from "react";
+import { PostsType } from "../../../redux/state";
 import classes from './MyPosts.module.css';
 import Post from "./Post/Post";
 
 
 type MyPostsPropsType = {
     posts: Array<PostsType>
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    newPostText: string
+    updateNewPostText: (newText: string) => void
 }
 
 const MyPosts = (props: MyPostsPropsType) => {
 
     let newPostEl = useRef<HTMLTextAreaElement>(null)
-    let addPost = () => {
+
+    const addPost = () => {
+        if (newPostEl.current !== null) {
+            props.addPost()
+        }
+    }
+
+    const onPostChange = () => {
         if (newPostEl.current !== null) {
             let text = newPostEl.current.value
-            props.addPost(text)
+            props.updateNewPostText(text)
             newPostEl.current.value = ""
         }
     }
 
-    let postsElement = props.posts.map(p => <Post message={p.message} likeCount={p.likesCount}/>)
+    let postsElement = props.posts.map(p => <Post message={p.message} likeCount={p.likesCount} />)
 
     return (
         <div className={classes.content}>
@@ -28,7 +37,7 @@ const MyPosts = (props: MyPostsPropsType) => {
                 <h3>My post</h3>
                 <div>
                     <div>
-                        <textarea ref={newPostEl}></textarea>
+                        <textarea ref={newPostEl} onChange={onPostChange} value={props.newPostText} />
                     </div>
                     <div>
                         <button onClick={addPost}>Add post</button>
@@ -40,6 +49,6 @@ const MyPosts = (props: MyPostsPropsType) => {
             </div>
         </div>
     )
-} 
+}
 
 export default MyPosts

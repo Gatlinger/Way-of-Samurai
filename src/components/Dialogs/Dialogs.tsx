@@ -6,6 +6,9 @@ import {DialogsType, messagesPageType, MessageType} from "../../redux/state";
 
 type DialogsPropsType = {
     state: messagesPageType
+    addNewMessage: () => void
+    updateNewMessageText: (newText: string) => void
+    newMessageText: string
 }
 const Dialogs = (props: DialogsPropsType) => {
 
@@ -15,7 +18,16 @@ const Dialogs = (props: DialogsPropsType) => {
     let newMessageEl = useRef<HTMLTextAreaElement>(null)
 
     const addMessage = () => {
-        alert(newMessageEl.current?.value)
+        if (newMessageEl.current !== null) {
+            props.addNewMessage()
+        }
+    }
+    const onMessageChange = () => {
+        if (newMessageEl.current !== null) {
+            let text = newMessageEl.current.value
+            props.updateNewMessageText(text)
+            newMessageEl.current.value = ""
+        }
     }
 
     return (
@@ -25,8 +37,8 @@ const Dialogs = (props: DialogsPropsType) => {
             </div>
             <div className={classes.messages}>
                 { messagesElements }
-                <textarea ref={newMessageEl}></textarea>
-                <button onClick={addMessage}>addMessage</button>
+                <textarea ref={newMessageEl} onChange={onMessageChange} value={props.newMessageText}></textarea>
+                <button  onClick={addMessage} >addMessage</button>
             </div>
         </div>
     )
